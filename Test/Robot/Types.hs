@@ -37,8 +37,8 @@ newtype Key = Key
 
 -- | A mouse button or scroll wheel.
 --
--- Note that scrolling up and down are treated as pressing two separate
--- buttons.
+-- Note that the scroll wheel is treated as two separate buttons: one
+-- scrolling up, and one scrolling down.
 newtype Button = Button
     { -- | Retrieve the internal identifier for this button.
       rawButton :: BUTTON }
