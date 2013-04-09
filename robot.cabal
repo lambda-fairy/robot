@@ -1,0 +1,33 @@
+Name:                robot
+Version:             0
+Synopsis:            Simulate keyboard and mouse events
+Homepage:            https://github.com/lfairy/robot
+License:             OtherLicense
+License-File:        LICENSE
+Author:              Chris Wong
+Maintainer:          lambda.fairy@gmail.com
+Category:            Graphics
+Build-Type:          Simple
+Extra-Source-Files:  README.markdown
+Cabal-Version:       >= 1.6
+
+Description:
+    Generate native keyboard and mouse events. Using this library,
+    applications will respond as if the user performed the action
+    themselves.
+
+Library
+    Exposed-Modules:
+        Test.Robot
+        Test.Robot.Internal
+        Test.Robot.Internal.XTest
+        Test.Robot.Types
+
+    Build-Depends:    base == 4.*
+                    , containers
+                    , transformers
+                    , xhb
+
+Source-Repository head
+    Type: git
+    Location: https://github.com/lfairy/robot.git
