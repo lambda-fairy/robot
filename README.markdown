@@ -22,9 +22,13 @@ Here are some things you can do:
 [blah blah blah]: http://mixermike622.deviantart.com/art/GO-FAST-287788805
 
 
-Setting up
-==========
+Quick start
+-----------
+
+First, download and install the library:
 
     git clone https://github.com/lfairy/robot.git
     cd robot
     cabal install
+
+Now try running some of the programs in the `examples` directory.
