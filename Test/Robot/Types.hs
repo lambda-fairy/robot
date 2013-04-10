@@ -18,7 +18,7 @@ module Test.Robot.Types
 
       -- * Constants
       -- ** Buttons
-    , leftButton, rightButton, middleButton
+    , leftButton, middleButton, rightButton
     , scrollUp, scrollDown, scrollLeft, scrollRight
     , backButton, forwardButton
 
@@ -66,9 +66,9 @@ customKey = Key
 customButton :: BUTTON -> Button
 customButton = Button
 
-leftButton, rightButton, middleButton,
+leftButton, middleButton, rightButton,
     scrollUp, scrollDown, scrollLeft, scrollRight,
     backButton, forwardButton :: Button
-[leftButton, rightButton, middleButton,
+[leftButton, middleButton, rightButton,
     scrollUp, scrollDown, scrollLeft, scrollRight,
     backButton, forwardButton] = map Button [1..9]
