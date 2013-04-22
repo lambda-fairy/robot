@@ -3,16 +3,16 @@
 
 module Test.Robot.Types
     (
-      -- * Keys and buttons
+      -- * Types
       Key()  -- Hide implementation
     , Button()
 
-      -- ** Defining your own
+      -- ** Creating
       -- $custom
     , customKey
     , customButton
 
-      -- ** Internals
+      -- ** Extracting
     , rawKey
     , rawButton
 
@@ -22,27 +22,14 @@ module Test.Robot.Types
     , scrollUp, scrollDown, scrollLeft, scrollRight
     , backButton, forwardButton
 
-      -- ** Keys
+    , module Test.Robot.Types.Keys
 
-      {- BIG EMPTY SPACE WHERE LOTS OF DEFINITIONS SHOULD BE -}
     ) where
 
 import Graphics.XHB
 
--- | A key on the keyboard.
-newtype Key = Key
-    { -- | Retrieve the internal identifier for this key.
-      rawKey :: KEYSYM }
-    deriving (Eq, Ord, Read, Show)
-
--- | A mouse button or scroll wheel.
---
--- Note that the scroll wheel is treated as two separate buttons: one
--- scrolling up, and one scrolling down.
-newtype Button = Button
-    { -- | Retrieve the internal identifier for this button.
-      rawButton :: BUTTON }
-    deriving (Eq, Ord, Read, Show)
+import Test.Robot.Types.Core
+import Test.Robot.Types.Keys
 
 -- $custom
 -- These two functions let you define your own keys and buttons.
@@ -66,9 +53,9 @@ customKey = Key
 customButton :: BUTTON -> Button
 customButton = Button
 
-leftButton, middleButton, rightButton,
-    scrollUp, scrollDown, scrollLeft, scrollRight,
-    backButton, forwardButton :: Button
+leftButton, middleButton, rightButton :: Button
+scrollUp, scrollDown, scrollLeft, scrollRight :: Button
+backButton, forwardButton :: Button
 [leftButton, middleButton, rightButton,
     scrollUp, scrollDown, scrollLeft, scrollRight,
     backButton, forwardButton] = map Button [1..9]
