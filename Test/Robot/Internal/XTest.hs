@@ -34,9 +34,9 @@ keyboard c press keycode =
 
 
 button :: Connection -> Bool -> BUTTON -> IO ()
-button c press button =
+button c press butt =
     let eventType = if press then 4 else 5
-        req = MkFakeInput eventType button 0 noWindow 0 0 0
+        req = MkFakeInput eventType butt 0 noWindow 0 0 0
     in fakeInput c req
 
 

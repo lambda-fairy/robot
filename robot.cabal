@@ -23,10 +23,16 @@ Library
         Test.Robot.Internal.XTest
         Test.Robot.Types
 
+    Other-Modules:
+        Test.Robot.Types.Core
+        Test.Robot.Types.Keys
+
     Build-Depends:    base == 4.*
                     , containers
                     , transformers
                     , xhb
+
+    GHC-Options: -Wall
 
 Source-Repository head
     Type: git

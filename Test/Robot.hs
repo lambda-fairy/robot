@@ -86,4 +86,4 @@ tap = (`hold` return ())
 
 -- | Do nothing for the specified number of seconds.
 sleep :: Rational -> Robot ()
-sleep = liftIO . threadDelay . round . (* 10^6)
+sleep = liftIO . threadDelay . round . (* 1000000)
