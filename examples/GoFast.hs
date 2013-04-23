@@ -9,5 +9,5 @@ import Control.Monad (forever)
 import Test.Robot
 
 main = runRobot . forever $ do
-    sleep 0.1
+    sleep 0.1  -- Don't reduce this number, or you'll actually break the game.
     tap _Space
