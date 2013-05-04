@@ -19,7 +19,8 @@ module Test.Robot
     , hold
     , tap
 
-      -- * Fancy utilities
+      -- * Miscellaneous
+    , releaseAll
     , sleep
 
     ) where
