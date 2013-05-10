@@ -20,7 +20,7 @@ import Data.List (unfoldr)
 import Data.Map (Map)
 import qualified Data.Map as M
 import Data.Tuple (swap)
-import Data.Word (Word16)
+import Data.Int (Int16)
 
 import Graphics.XHB
 import Graphics.XHB.Gen.Test
@@ -40,12 +40,27 @@ button c press butt =
     in fakeInput c req
 
 
-motion :: Connection -> Bool -> (Word16, Word16) -> IO ()
+motion :: Connection -> Bool -> (Int16, Int16) -> IO ()
 motion c relative (x, y) =
     let eventType = 6
         isRelative = if relative then 1 else 0
-        req = MkFakeInput eventType isRelative 0 noWindow x y 0
+        req = MkFakeInput eventType isRelative 0 noWindow
+                -- See note [fromIntegral]
+                (fromIntegral x) (fromIntegral y) 0
     in fakeInput c req
+
+{-
+
+Note [fromIntegral]
+~~~~~~~~~~~~~~~~~~~
+
+In xcb-proto < 1.7, the x and y coordinates are declared incorrectly as
+Word16, instead of Int16 as they should be. As a temporary workaround,
+we use fromIntegral to coerce the values.
+
+See <http://cgit.freedesktop.org/~keithp/xcb-proto/commit/src/xtest.xml?id=f3ae971edce37ad96ef0b8a6059c1f853e88fcf3>
+
+ -}
 
 
 noWindow :: WINDOW
