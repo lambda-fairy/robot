@@ -83,17 +83,20 @@ motion press x y = mkRobot' $ \c ->
 -- | @clipIntegral x :: T@ converts the value @x@ to type @T@.
 -- If the argument does not fit in @T@, it is clipped, rather than
 -- wrapping around as with 'fromIntegral'.
---
--- The range of the result type must be a subset of the argument type.
--- If not, the behavior of this function is undefined.
---
 clipIntegral :: (Integral a, Integral b, Ord a, Bounded b) => a -> b
-clipIntegral x = result
+clipIntegral = narrow . widen
+
+widen :: Integral a => a -> Integer
+widen = fromIntegral
+
+narrow :: (Integral b, Bounded b) => Integer -> b
+narrow x = result
   where
     result
       | x < fromIntegral (minBound `asTypeOf` result) = minBound
       | x > fromIntegral (maxBound `asTypeOf` result) = maxBound
       | otherwise = fromIntegral x
+
 
 -- | Release all the keys and buttons, in case some were left held down.
 -- This is called automatically before 'runRobot' returns.
