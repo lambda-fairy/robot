@@ -19,7 +19,6 @@ module Test.Robot.Internal
     , keyboard
     , button
     , motion
-    , releaseAll
 
     ) where
 
@@ -96,8 +95,3 @@ narrow x = result
       | x < fromIntegral (minBound `asTypeOf` result) = minBound
       | x > fromIntegral (maxBound `asTypeOf` result) = maxBound
       | otherwise = fromIntegral x
-
-
--- | Release all the keys and buttons, in case some were left held down.
-releaseAll :: Robot ()
-releaseAll = mkRobot' $ \c -> X.releaseAll c

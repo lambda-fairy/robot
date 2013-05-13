@@ -6,7 +6,6 @@ module Test.Robot.Internal.XTest
       keyboard
     , button
     , motion
-    , releaseAll
 
     -- * Utility functions
     , getKeysymMap
@@ -15,7 +14,7 @@ module Test.Robot.Internal.XTest
 
 import Control.Arrow (second)
 import Control.Applicative (liftA2)
-import Control.Monad (forM_, (>=>))
+import Control.Monad ((>=>))
 import Data.List (unfoldr)
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -65,15 +64,6 @@ See <http://cgit.freedesktop.org/~keithp/xcb-proto/commit/src/xtest.xml?id=f3ae9
 
 noWindow :: WINDOW
 noWindow = fromXid xidNone
-
-
--- | Release all the keys and buttons, in case some were left held down.
-releaseAll :: Connection -> IO ()
-releaseAll c = do
-    let (low, high) = keycodeRange c
-    forM_ [low..high] $ keyboard c False
-    -- There's no limit to the number of buttons, afaik. So hazard a guess.
-    forM_ [1..42] $ button c False
 
 
 -- | Return a structure mapping each keycode to its keysyms.

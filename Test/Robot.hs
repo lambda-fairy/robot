@@ -20,7 +20,6 @@ module Test.Robot
     , tap
 
       -- * Miscellaneous
-    , releaseAll
     , sleep
 
     ) where
