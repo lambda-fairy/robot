@@ -25,7 +25,7 @@ module Test.Robot.Internal
 
 
 import Control.Applicative
-import Control.Exception (bracket_, finally)
+import Control.Exception (bracket_)
 import Control.Monad.IO.Class
 import Control.Monad.Trans.Reader
 import Data.Map (Map)
@@ -51,7 +51,7 @@ runRobot m = do
 runRobotWithConnection :: Robot a -> Connection -> IO a
 runRobotWithConnection (Robot m) c = do
     keymap <- X.getKeysymMap c
-    runReaderT m (c, keymap) `finally` X.releaseAll c
+    runReaderT m (c, keymap)
 
 mkRobot :: ((Connection, Map KEYSYM KEYCODE) -> IO a) -> Robot a
 mkRobot = Robot . ReaderT
@@ -99,6 +99,5 @@ narrow x = result
 
 
 -- | Release all the keys and buttons, in case some were left held down.
--- This is called automatically before 'runRobot' returns.
 releaseAll :: Robot ()
 releaseAll = mkRobot' $ \c -> X.releaseAll c
