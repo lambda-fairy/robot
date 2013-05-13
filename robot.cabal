@@ -1,5 +1,5 @@
 Name:                robot
-Version:             1.0.1.1
+Version:             1.1
 Synopsis:            Simulate keyboard and mouse events
 Homepage:            https://github.com/lfairy/robot
 License:             OtherLicense
@@ -15,6 +15,8 @@ Description:
     Generate native keyboard and mouse events. Using this library,
     applications will respond as if the user performed the action
     themselves.
+    .
+    For examples, see the @examples@ folder in the source distribution.
 
 Library
     Exposed-Modules:
