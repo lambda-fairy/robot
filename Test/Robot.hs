@@ -33,6 +33,9 @@ import Test.Robot.Internal
 import Test.Robot.Types
 
 
+infixr 4 `hold`  -- Allow e.g. xs ++ ys `hold` m
+
+
 -- | Represents things that can be pressed: either a key on a keyboard
 -- or a button on a mouse.
 class Pressable x where
@@ -73,7 +76,7 @@ moveTo = motion False
 -- For example, you type some text in ALL CAPS using:
 --
 -- @
--- hold _Shift $ mapM_ tap [_D, _U, _C, _K, _S]
+-- _Shift `hold` mapM_ tap [_D, _U, _C, _K, _S]
 -- @
 --
 hold :: Pressable x => x -> Robot a -> Robot a
