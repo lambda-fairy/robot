@@ -68,7 +68,8 @@ bracketRobot_ (Robot before) (Robot after) (Robot middle)
 keyboard :: Bool -> Key -> Robot ()
 keyboard press key = mkRobot $ \(c, keymap) -> do
     case M.lookup (rawKey key) keymap of
-        Nothing -> error $ "Unknown keysym: " ++ show (rawKey key)
+        Nothing -> error $ "keysym " ++ show (rawKey key)
+                            ++ " does not exist on keyboard layout"
         Just keycode -> X.keyboard c press keycode
 
 button :: Bool -> Button -> Robot ()
