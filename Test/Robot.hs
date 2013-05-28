@@ -11,12 +11,9 @@ module Test.Robot
     , module Test.Robot.Types
 
       -- * Doing things
-      -- ** Basic operations
-    , Pressable(press, release)
+    , Pressable(press, release, hold)
     , moveBy
     , moveTo
-      -- ** Derived operations
-    , hold
     , tap
 
       -- * Miscellaneous
@@ -46,6 +43,19 @@ class Pressable x where
     -- | Release a key or button.
     release :: x -> Robot ()
 
+    -- | @hold x act@ holds down @x@ while executing @act@. It is
+    -- equivalent to:
+    --
+    -- @
+    -- press x >> act >> release x
+    -- @
+    --
+    -- except @hold@ ensures that the argument is released in the event
+    -- of an exception.
+    --
+    hold :: x -> Robot a -> Robot a
+    hold = bracketRobot_ <$> press <*> release
+
 instance Pressable Key where
     press = keyboard True
     release = keyboard False
@@ -53,6 +63,24 @@ instance Pressable Key where
 instance Pressable Button where
     press = button True
     release = button False
+
+-- | Press items from left-to-right, but release from right-to-left.
+--
+-- This behavior ensures the following equivalence holds:
+--
+-- @
+-- press xs >> act >> release xs
+--   === xs \`hold\` act
+--   === x1 \`hold\` x2 \`hold\` ... xn \`hold\` act
+-- @
+--
+instance Pressable x => Pressable [x] where
+    press = mapM_ press
+    release = mapM_ release . reverse
+
+    hold = foldr (.) id . map hold
+    --hold [] = id
+    --hold (x:xs) = hold x . hold xs
 
 
 -- | Move the pointer by an offset.
@@ -63,24 +91,6 @@ moveBy = motion True
 moveTo :: Int -> Int -> Robot ()
 moveTo = motion False
 
-
--- | @hold x act@ holds down @x@ while executing @act@. It is equivalent
--- to the code:
---
--- @
--- press x
--- act
--- release x
--- @
---
--- For example, you type some text in ALL CAPS using:
---
--- @
--- _Shift `hold` mapM_ tap [_D, _U, _C, _K, _S]
--- @
---
-hold :: Pressable x => x -> Robot a -> Robot a
-hold = bracketRobot_ <$> press <*> release
 
 -- | Press the argument, then release it.
 tap :: Pressable x => x -> Robot ()
