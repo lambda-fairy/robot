@@ -5,7 +5,7 @@ module Test.Robot
       -- * Running your robot
       Robot()  -- hide implementation
     , runRobot
-    , runRobotWithConnection
+    , runRobotWith
 
       -- * Key and button constants
     , module Test.Robot.Types

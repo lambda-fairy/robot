@@ -8,7 +8,7 @@ module Test.Robot.Internal
       -- * The Robot monad
       Robot(..)
     , runRobot
-    , runRobotWithConnection
+    , runRobotWith
     , mkRobot
     , mkRobot'
 
@@ -45,11 +45,11 @@ newtype Robot a = Robot { unRobot :: ReaderT (Connection, Map KEYSYM KEYCODE) IO
 runRobot :: Robot a -> IO a
 runRobot m = do
     Just c <- connect
-    runRobotWithConnection m c
+    runRobotWith c m
 
 -- | Run the robot using an existing connection.
-runRobotWithConnection :: Robot a -> Connection -> IO a
-runRobotWithConnection (Robot m) c = do
+runRobotWith :: Connection -> Robot a -> IO a
+runRobotWith c (Robot m) = do
     keymap <- X.getKeysymMap c
     runReaderT m (c, keymap)
 
