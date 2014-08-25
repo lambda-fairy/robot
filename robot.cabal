@@ -21,6 +21,7 @@ Description:
 Library
     Exposed-Modules:
         Test.Robot
+        Test.Robot.Advanced
         Test.Robot.Internal
         Test.Robot.Internal.XTest
         Test.Robot.Types

@@ -9,6 +9,7 @@ module Test.Robot.Internal
       Robot(..)
     , runRobot
     , runRobotWith
+    , connect
     , mkRobot
     , mkRobot'
 
@@ -27,7 +28,8 @@ import Control.Monad.Trans.Reader
 import Data.Map (Map)
 import qualified Data.Map as M
 
-import Graphics.XHB
+import Graphics.XHB hiding (connect)
+import qualified Graphics.XHB as X
 
 import qualified Test.Robot.Internal.XTest as X
 import Test.Robot.Types
@@ -44,7 +46,7 @@ newtype Robot a = Robot { unRobot :: ReaderT (Connection, Map KEYSYM KEYCODE) IO
 -- | Run the robot, connecting to the display automatically.
 runRobot :: Robot a -> IO a
 runRobot m = do
-    Just c <- connect
+    c <- connect
     runRobotWith c m
 
 -- | Run the robot using an existing connection.
@@ -52,6 +54,12 @@ runRobotWith :: Connection -> Robot a -> IO a
 runRobotWith c (Robot m) = do
     keymap <- X.getKeysymMap c
     runReaderT m (c, keymap)
+
+-- | Connect to the X11 server.
+connect :: IO Connection
+connect = do
+    Just c <- X.connect
+    return c
 
 mkRobot :: ((Connection, Map KEYSYM KEYCODE) -> IO a) -> Robot a
 mkRobot = Robot . ReaderT
