@@ -94,6 +94,15 @@ moveTo = motion False
 
 
 -- | Press the argument, then release it.
+--
+-- Note that the underlying events are fired very quickly; much faster
+-- than some applications (such as Xmonad) can handle. If this becomes
+-- an issue, you may introduce a delay using 'sleep':
+--
+-- @
+-- slowTap x = x \`hold\` sleep 0.1
+-- @
+--
 tap :: Pressable x => x -> Robot ()
 tap = (`hold` return ())
 

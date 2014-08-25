@@ -33,7 +33,11 @@ import qualified Test.Robot.Internal.XTest as X
 import Test.Robot.Types
 
 
--- | The Robot monad: a reader monad over IO.
+-- | A @Robot@ is a program that interacts with the GUI.
+--
+-- Use 'runRobot' to execute your Robot, and 'liftIO' to perform
+-- arbitrary I/O.
+--
 newtype Robot a = Robot { unRobot :: ReaderT (Connection, Map KEYSYM KEYCODE) IO a }
     deriving (Functor, Applicative, Monad, MonadIO, MonadCatch, MonadMask, MonadThrow)
 
