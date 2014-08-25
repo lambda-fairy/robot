@@ -24,6 +24,7 @@ module Test.Robot
 
 import Control.Applicative
 import Control.Concurrent (threadDelay)
+import Control.Monad.Catch
 import Control.Monad.IO.Class
 
 import Test.Robot.Internal
@@ -54,7 +55,7 @@ class Pressable x where
     -- of an exception.
     --
     hold :: x -> Robot a -> Robot a
-    hold = bracketRobot_ <$> press <*> release
+    hold = bracket_ <$> press <*> release
 
 instance Pressable Key where
     press = keyboard True

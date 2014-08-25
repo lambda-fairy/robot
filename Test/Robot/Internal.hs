@@ -12,9 +12,6 @@ module Test.Robot.Internal
     , mkRobot
     , mkRobot'
 
-      -- * Exception safety
-    , bracketRobot_
-
       -- * Synthesizing events
     , keyboard
     , button
@@ -24,7 +21,7 @@ module Test.Robot.Internal
 
 
 import Control.Applicative
-import Control.Exception (bracket_)
+import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Control.Monad.Trans.Reader
 import Data.Map (Map)
@@ -38,7 +35,7 @@ import Test.Robot.Types
 
 -- | The Robot monad: a reader monad over IO.
 newtype Robot a = Robot { unRobot :: ReaderT (Connection, Map KEYSYM KEYCODE) IO a }
-    deriving (Functor, Applicative, Monad, MonadIO)
+    deriving (Functor, Applicative, Monad, MonadIO, MonadCatch, MonadMask, MonadThrow)
 
 -- | Run the robot, connecting to the display automatically.
 runRobot :: Robot a -> IO a
@@ -57,12 +54,6 @@ mkRobot = Robot . ReaderT
 
 mkRobot' :: (Connection -> IO a) -> Robot a
 mkRobot' = mkRobot . (. fst)
-
-
-bracketRobot_ :: Robot a -> Robot z -> Robot r -> Robot r
-bracketRobot_ (Robot before) (Robot after) (Robot middle)
-    = mkRobot $ \env -> let run = flip runReaderT env
-                        in bracket_ (run before) (run after) (run middle)
 
 
 keyboard :: Bool -> Key -> Robot ()

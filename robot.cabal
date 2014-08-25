@@ -31,6 +31,7 @@ Library
 
     Build-Depends:    base == 4.*
                     , containers
+                    , exceptions == 0.6.*
                     , transformers
                     , xhb
 
