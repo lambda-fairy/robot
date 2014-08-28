@@ -17,6 +17,7 @@ module Test.Robot
 
       -- * Miscellaneous
     , sleep
+    , module Test.Robot.Connection
 
     ) where
 
@@ -26,6 +27,7 @@ import Control.Concurrent (threadDelay)
 import Control.Monad.Catch
 import Control.Monad.IO.Class
 
+import Test.Robot.Connection
 import Test.Robot.Internal
 import Test.Robot.Types
 

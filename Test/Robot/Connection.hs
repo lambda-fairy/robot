@@ -1,19 +1,15 @@
--- | Extra functions for advanced users.
+-- | Functions for managing connections manually.
 
-module Test.Robot.Advanced
+module Test.Robot.Connection
     (
       -- * Managing connections
       -- $connections
       runRobotWith
     , connect
 
-      -- * Re-exports
-    , module Test.Robot
-
     ) where
 
 
-import Test.Robot
 import Test.Robot.Internal
 
 
