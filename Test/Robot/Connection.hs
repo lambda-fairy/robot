@@ -26,7 +26,7 @@ import Test.Robot.Internal
 --
 -- @
 -- main = do
---     Just conn <- 'connect'
+--     conn <- 'connect'
 --     replicateM_ 500 $ do
 --         'runRobotWith' conn $ tap _A
 --         putStrLn \"Ducks!\"
