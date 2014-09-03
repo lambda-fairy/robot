@@ -32,3 +32,15 @@ First, download and install the library:
     cabal install
 
 Now try running some of the programs in the `examples` directory.
+
+
+TODO
+----
+
+* Backends for Mac OS X, Windows, and Wayland
+
+* Screenshots
+
+* Actions currently run instantaneously, which can be an issue for some
+  applications. Perhaps add a small delay between each operation like
+  Java does.
