@@ -53,7 +53,7 @@ def dump_definitions(blocks, print=print):
             names = ['_' + name for name in names]
             # Gather all the aliases into the same signature, so Haddock
             # displays them on one line
-            print(', '.join(names), ':: Key')
+            print(', '.join(names), ':: Switch')
             for name in names:
                 print(name.ljust(30), '= Key', code)
 

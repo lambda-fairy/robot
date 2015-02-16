@@ -35,8 +35,8 @@ import Test.Robot.Types
 infixr 4 `hold`  -- Allow e.g. xs ++ ys `hold` m
 
 
--- | Represents things that can be pressed: either a key on a keyboard
--- or a button on a mouse.
+-- | Represents things that can be pressed: either a single 'Switch' or
+-- a list of 'Switch'es.
 class Pressable x where
 
     -- | Press a key or button.
@@ -58,13 +58,9 @@ class Pressable x where
     hold :: x -> Robot a -> Robot a
     hold = bracket_ <$> press <*> release
 
-instance Pressable Key where
-    press = keyboard True
-    release = keyboard False
-
-instance Pressable Button where
-    press = button True
-    release = button False
+instance Pressable Switch where
+    press = switch True
+    release = switch False
 
 -- | Press items from left-to-right, but release from right-to-left.
 --

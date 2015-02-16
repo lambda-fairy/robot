@@ -14,8 +14,7 @@ module Test.Robot.Internal
     , mkRobot'
 
       -- * Synthesizing events
-    , keyboard
-    , button
+    , switch
     , motion
 
     ) where
@@ -68,16 +67,14 @@ mkRobot' :: (Connection -> IO a) -> Robot a
 mkRobot' = mkRobot . (. fst)
 
 
-keyboard :: Bool -> Key -> Robot ()
-keyboard press key = mkRobot $ \(c, keymap) -> do
-    case M.lookup (rawKey key) keymap of
-        Nothing -> error $ "keysym " ++ show (rawKey key)
+switch :: Bool -> Switch -> Robot ()
+switch press (Key key) = mkRobot $ \(c, keymap) -> do
+    case M.lookup key keymap of
+        Nothing -> error $ "keysym " ++ show key
                             ++ " does not exist on keyboard layout"
         Just keycode -> X.keyboard c press keycode
-
-button :: Bool -> Button -> Robot ()
-button press butt {- LOL -} = mkRobot' $ \c ->
-    X.button c press (rawButton butt)
+switch press (Button butt {- LOL -}) = mkRobot' $ \c ->
+    X.button c press butt
 
 motion :: Bool -> Int -> Int -> Robot ()
 motion press x y = mkRobot' $ \c ->
