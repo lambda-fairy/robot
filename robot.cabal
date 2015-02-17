@@ -6,7 +6,7 @@ License:             OtherLicense
 License-File:        LICENSE
 Author:              Chris Wong
 Maintainer:          lambda.fairy@gmail.com
-Category:            Graphics
+Category:            Graphics, Testing
 Build-Type:          Simple
 Extra-Source-Files:  README.markdown, examples/*.hs, generate_keys.py, keys.txt
 Cabal-Version:       >= 1.6
